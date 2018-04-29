@@ -983,7 +983,7 @@ def get_response(msg):
         r = requests.post(apiUrl, data=data).json()    
         return r.get('text')    
     except:    
-        return none
+        return None
 print(get_response('上海天气'))
 </code></pre>
                     </div>
