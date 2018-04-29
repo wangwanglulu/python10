@@ -965,6 +965,30 @@ show(ff_4)
                     </div>
                 </section>
                 <section>
+                	<p><a href="http://www.tuling123.com/">Turing Robot</a></p>
+                	                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable data-noescape>
+import requests     
+    
+KEY = '' # 这里填拿到的key    
+    
+def get_response(msg):    
+    apiUrl = 'http://www.tuling123.com/openapi/api'    
+    data = {    
+        'key'    : KEY,    
+        'info'   : msg,    
+        'userid' : '路老师',    
+    }    
+    try:    
+        r = requests.post(apiUrl, data=data).json()    
+        return r.get('text')    
+    except:    
+        return none
+print(get_response('上海天气'))
+</code></pre>
+                    </div>
+                </section>
+                <section>
                     <ul>
                         <li>
                             <p>Python Crash Couse (Chapters we do not cover: Chapter 12 - 14, 17 - 20)</p>
