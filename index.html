@@ -460,7 +460,8 @@ with open(filename) as f:
 
 from matplotlib import pyplot as plt
 
-fig = plt.figure(dpi=128, figsize=(10, 6)) uplt.plot(highs, c='red')
+fig = plt.figure(dpi=128, figsize=(10, 6)) 
+plt.plot(highs, c='red')
 
 # Format plot.
 plt.title("Daily high temperatures, July 2014", fontsize=24) 
@@ -470,15 +471,21 @@ plt.tick_params(axis='both', which='major', labelsize=16)
 plt.show()
 </code></pre>
                     </div>
+                    <div class="fragment"><img data-src="plt11.png" style="height: 300pt"></div>
                 </section>
                 <section>
                     <p>The datetime Module</p>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
 
->>> from datetime import datetime
->>> first_date = datetime.strptime('2014-7-1', '%Y-%m-%d') 
->>> print(first_date)
+from datetime import datetime
+first_date = datetime.strptime('2014-7-1', '%Y-%m-%d') 
+print(type(first_date))
+print(first_date.strftime('%B %d %Y'))
+print(first_date)
+
+<class 'datetime.datetime'>
+July 01 2014
 2014-07-01 00:00:00
 </code></pre>
                     </div>
@@ -510,7 +517,7 @@ with open(filename) as f:
     reader = csv.reader(f)
     header_row = next(reader)
     
-    dates, highs = [], [] 
+    dates, highs= [], [] 
     for row in reader:
         current_date = datetime.strptime(row[0], "%Y-%m-%d")
         dates.append(current_date)
@@ -548,7 +555,7 @@ with open(filename) as f:
     reader = csv.reader(f)
     header_row = next(reader)
     
-    <mark>dates, highs = [], [], []</mark> 
+    <mark>dates, highs, lows= [], [], []</mark> 
     for row in reader:
         current_date = datetime.strptime(row[0], "%Y-%m-%d")
         dates.append(current_date)
