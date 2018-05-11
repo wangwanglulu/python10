@@ -903,7 +903,7 @@ for key, value_iter in groupby(data, len):
 >>> list(zip(*zipped)) #解压也使用list进行转换
 [(1, 2, 3), (4, 5, 6)]
 >>> zipped = zip(a,b)
->>> x,y,z = zip(*zipped))
+>>> x,y = zip(*zipped)
 >>> print(x)
 (1,2,3)
 </code></pre>
@@ -919,7 +919,7 @@ def draw_line(x_data, y_data, title, y_legend):
     for x, y in groupby(sorted(zip(x_data, y_data)), key=lambda _: _[0]):  
         y_list = [v for _, v in y]
         xy_map.append([x, sum(y_list) / len(y_list)])  
-    x_unique, y_mean = list(zip(*xy_map)) # [*zip(*xy_map)] 
+    x_unique, y_mean = zip(*xy_map) # [*zip(*xy_map)] 
     line_chart = pygal.Line()
     line_chart.title = title
     line_chart.x_labels = x_unique
