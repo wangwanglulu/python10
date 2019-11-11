@@ -25,271 +25,11 @@
         <div class="slides">
             <section data-background-video="bgm.mp4" data-background-video-loop data-background-video-muted style="text-align: left;">
                 <h2 style="color: white">Python Programming</h2>
-                <h5 style="color: white">Lecture 10 Advanced OOP (2), File, Test</h5>
+                <h5 style="color: white">Lecture 10 OOP (2), File, Test</h5>
             </section>
             <section>
                 <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">10.1 Special Methods </h2>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Private Attributes and methods</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Student:
-    def __init__(self, name, score):
-        self.__name = name
-        self.__score = score
-
-    def __show_score(self):
-        print(self.__score)
-
-    def print_score(self):
-        print('%s: %s' % (self.__name, self.__score))  
-
-bart = Student('Bart Simpson', 59)
-bart.print_score()
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-print(bart._Student__name) #correct
-bart._Student__show_score() #correct
-
-print(bart.__name) #error
-bart.__show_score() #error
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>The precise definition of dir() is that it lists the methods and attributes of a Python object.</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
->>> stuff = list()
->>> dir(stuff)
-['__add__', '__class__', '__contains__', '__delattr__',
-'__delitem__', '__dir__', '__doc__', '__eq__',
-'__format__', '__ge__', '__getattribute__', '__getitem__',
-'__gt__', '__hash__', '__iadd__', '__imul__', '__init__',
-'__iter__', '__le__', '__len__', '__lt__', '__mul__',
-'__ne__', '__new__', '__reduce__', '__reduce_ex__',
-'__repr__', '__reversed__', '__rmul__', '__setattr__',
-'__setitem__', '__sizeof__', '__str__', '__subclasshook__',
-'append', 'clear', 'copy', 'count', 'extend', 'index',
-'insert', 'pop', 'remove', 'reverse', 'sort']
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>Everything in Python is an object.</b></p>
-                        </li>
-                        <li class="fragment">
-                            <p><b>Actually, the class you create inherits the ``object''.</b></p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-stuff = list()
-stuff.append('python')
-stuff.append('chuck')
-stuff.sort()
-print (stuff[0])
-
-print (stuff.__getitem__(0))
-print (list.__getitem__(stuff,0))
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-chuck
-chuck
-chuck
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Classes can intercept Python Operators</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    def __str__(self):
-        return "Dog's name is %s." % self.name  
-
-
-my_dog = Dog('willie', 6)
-print(dir(my_dog))
-#output
-['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__',
- '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', 
- '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__',
-  '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 
-  'age', 'name']
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__str__</b></p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-my_dog = Dog('willie', 6)
-print(my_dog)
-#output
-<__main__.Dog object at 0x053A3750>
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    def __str__(self):
-        return "Dog's name is %s." % self.name  
-
-my_dog = Dog('willie', 6)
-print(my_dog)
-#output
-Dog's name is willie.
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__add__</b></p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-my_dog = Dog('willie', 6)
-
-print(my_dog.name +' your_dog')
-#output
-willie your_dog
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def __add__(self, other):
-        return Dog(self.name + other, age = 6)
-
-my_dog = Dog('willie', 6)
-x = my_dog +' your_dog' #It creates a new instance.
-
-print(x.name)
-
-#output
-willie your_dog
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <h3>built-in Attributes</h3>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__dict__</b></p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-my_dog = Dog('willie', 6)
-print(my_dog.__dict__) # attributes of instances
-print(Dog.__dict__) # attributes of classes
-#output
-{'name': 'willie', 'age': 6} 
-{'__module__': '__main__', 
-'__init__': &lt;function Dog.__init__ at 0x0000029EA1277B70&gt;, 
-'__dict__': &lt;attribute '__dict__' of 'Dog' objects&gt;, 
-'__weakref__': &lt;attribute '__weakref__' of 'Dog' objects&gt;, 
-'__doc__': None}
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__doc__, __name__, __module__, __bases__</b></p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    "This is about dog class."
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-print(Dog.__doc__)
-print(Dog.__name__)
-print(Dog.__module__)
-print(Dog.__bases__)
-#output
-This is about dog class.
-Dog
-__main__
-(&lt;class 'object'&gt;,)
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    "This is about dog class."
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-class Husky(Dog):
-    pass
-
-print(Husky.__bases__)
-#output
-(&lt;class '__main__.Dog'&gt;,)
-</code></pre>
-                    </div>
-                </section>
-            </section>
-            <section>
-                <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">10.2 Multiple Inheritance </h2>
+                    <h2 style="color: white">10.1 Multiple Inheritance </h2>
                 </section>
                 <section>
                     <ul>
@@ -426,9 +166,9 @@ husky
                     </div>
                 </section>
                 <section data-background-image="bg.png">
-<div id="leftc">
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
+                    <div id="leftc">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
 class Animal():
     def __init__(self, name):
         self.name = name
@@ -448,11 +188,11 @@ print(Husky.__mro__)
 &lt;class '__main__.Animal'&gt;, 
 &lt;class 'object'&gt;)
 </code></pre>
-                    </div>
+                        </div>
                     </div>
                     <div id="rightc">
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
 class Animal(): 
     pass
 class Dog(Animal):
@@ -471,7 +211,7 @@ print(X.__mro__)
 &lt;class '__main__.Animal'&gt;, 
 &lt;class 'object'&gt;)
 </code></pre>
-                    </div>
+                        </div>
                     </div>
                 </section>
                 <section>
@@ -625,6 +365,268 @@ y.eat() # Coco is eating.
 y.run() # Coco is running.   
 </code></pre>
                         </div>
+                    </div>
+                </section>
+                
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">10.2 Special Methods </h2>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Private Attributes and methods</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+class Student:
+    def __init__(self, name, score):
+        self.__name = name
+        self.__score = score
+
+    def __show_score(self):
+        print(self.__score)
+
+    def print_score(self):
+        print('%s: %s' % (self.__name, self.__score))  
+
+bart = Student('Bart Simpson', 59)
+bart.print_score()
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+print(bart._Student__name) #correct
+bart._Student__show_score() #correct
+
+print(bart.__name) #error
+bart.__show_score() #error
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>The precise definition of dir() is that it lists the methods and attributes of a Python object.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> stuff = list()
+>>> dir(stuff)
+['__add__', '__class__', '__contains__', '__delattr__',
+'__delitem__', '__dir__', '__doc__', '__eq__',
+'__format__', '__ge__', '__getattribute__', '__getitem__',
+'__gt__', '__hash__', '__iadd__', '__imul__', '__init__',
+'__iter__', '__le__', '__len__', '__lt__', '__mul__',
+'__ne__', '__new__', '__reduce__', '__reduce_ex__',
+'__repr__', '__reversed__', '__rmul__', '__setattr__',
+'__setitem__', '__sizeof__', '__str__', '__subclasshook__',
+'append', 'clear', 'copy', 'count', 'extend', 'index',
+'insert', 'pop', 'remove', 'reverse', 'sort']
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p><b>Everything in Python is an object.</b></p>
+                        </li>
+                        
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+stuff = list()
+stuff.append('python')
+stuff.append('chuck')
+stuff.sort()
+print (stuff[0])
+
+print (stuff.__getitem__(0))
+print (list.__getitem__(stuff,0))
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+chuck
+chuck
+chuck
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p><b>Actually, the class you create inherits the ``object'' class.</b></p>
+                        </li>
+                        <li class="fragment">
+                            <p>Classes can intercept Python Operators</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+class Dog():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    def __str__(self):
+        return "Dog's name is %s." % self.name  
+
+
+my_dog = Dog('willie', 6)
+print(dir(my_dog))
+#output
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__',
+ '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', 
+ '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__',
+  '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 
+  'age', 'name']
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p><b>__str__</b></p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+class Dog():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+my_dog = Dog('willie', 6)
+print(my_dog)
+#output
+<__main__.Dog object at 0x053A3750>
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+class Dog():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    def __str__(self):
+        return "Dog's name is %s." % self.name  
+
+my_dog = Dog('willie', 6)
+print(my_dog)
+#output
+Dog's name is willie.
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p><b>__add__</b></p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+class Dog():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+my_dog = Dog('willie', 6)
+
+print(my_dog.name +' your_dog')
+#output
+willie your_dog
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+class Dog():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __add__(self, other):
+        return self.name + other
+
+my_dog = Dog('willie', 6)
+x = my_dog +' your_dog' 
+
+print(x)
+
+#output
+willie your_dog
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <h3>built-in Attributes</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p><b>__dict__</b></p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+class Dog():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+my_dog = Dog('willie', 6)
+print(my_dog.__dict__) # attributes of instances
+print(Dog.__dict__) # attributes of classes
+#output
+{'name': 'willie', 'age': 6} 
+{'__module__': '__main__', 
+'__init__': &lt;function Dog.__init__ at 0x0000029EA1277B70&gt;, 
+'__dict__': &lt;attribute '__dict__' of 'Dog' objects&gt;, 
+'__weakref__': &lt;attribute '__weakref__' of 'Dog' objects&gt;, 
+'__doc__': None}
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p><b>__doc__, __name__, __module__, __bases__</b></p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+class Dog():
+    "This is about dog class."
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+print(Dog.__doc__)
+print(Dog.__name__)
+print(Dog.__module__)
+print(Dog.__bases__)
+#output
+This is about dog class.
+Dog
+__main__
+(&lt;class 'object'&gt;,)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+class Dog():
+    "This is about dog class."
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+class Husky(Dog):
+    pass
+
+print(Husky.__bases__)
+#output
+(&lt;class '__main__.Dog'&gt;,)
+</code></pre>
                     </div>
                 </section>
                 <section>
@@ -945,7 +947,7 @@ def count_words(filename):
         + str(num_words) +" words.")
 </code></pre>
                     </div>
-                                        <div class="fragment">
+                    <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
 filename = 'alice.txt'
 count_words(filename)
