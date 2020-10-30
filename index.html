@@ -25,1378 +25,749 @@
         <div class="slides">
             <section data-background-video="bgm.mp4" data-background-video-loop data-background-video-muted style="text-align: left;">
                 <h2 style="color: white">Python Programming</h2>
-                <h5 style="color: white">Lecture 10 OOP (2), File, Test</h5>
+                <h5 style="color: white">Lecture 10 Data Organization and Visualization</h5>
             </section>
-            <section>
-                <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">10.1 Multiple Inheritance </h2>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Multiple inheritance </p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Person:
-    def __init__(self,name,sex):
-        self.name = name
-        self.sex = sex
-        
-    def print_title(self):
-        if self.sex == "male":
-            print("man")
-        elif self.sex == "female":
-            print("woman")               
-
-class Child(Person):                
-    def print_title(self):
-        if self.sex == "male":
-            print("boy")
-        elif self.sex == "female":
-            print("girl")
             
-class Baby(Child):
-    pass
-    </code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-            
-May = Baby("May","female")
-May.print_title()               
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-girl
-</code></pre>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <ul>
-                        <li class="fragment">
-                            <p>Diamond Problem (钻石继承)</p>
-                        </li>
-                    </ul>
-                    <div id="leftc">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Animal():
-    def __init__(self):
-        print('animal')
-
-class Dog(Animal):
-    def __init__(self):
-        Animal.__init__(self)
-        print('dog')
-
-class Cat(Animal):
-    def __init__(self):
-        Animal.__init__(self)
-        print('cat')
-
-class Husky(Dog, Cat):
-    def __init__(self):
-        Dog.__init__(self)
-        Cat.__init__(self)
-        print('husky')     
-
-
-</code></pre>
-                        </div>
-                    </div>
-                    <div id="rightc">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_dog=Husky()
-
-#output
-
-animal
-dog
-animal
-cat
-husky
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div id="leftc">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Animal():
-    def __init__(self):
-        print('animal')
-
-class Dog(Animal):
-    def __init__(self):
-        super().__init__()
-        print('dog')
-
-class Cat(Animal):
-    def __init__(self):
-        super().__init__()
-        print('cat')
-
-class Husky(Dog, Cat):
-    def __init__(self):
-        super().__init__()
-        print('husky')     
-
-my_dog=Husky()
-</code></pre>
-                        </div>
-                    </div>
-                    <div id="rightc">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-my_dog=Husky()
-
-#output
-
-animal
-cat
-dog
-husky
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div id="leftc">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Animal():
-    def __init__(self, name):
-        self.name = name
-
-class Dog():
-    def __init__(self, name):
-        super().__init__(name)
-
-class Husky(Dog, Animal):
-    def __init__(self, name):
-        super().__init__(name)      
-
-print(Husky.__mro__)
-#output
-(&lt;class '__main__.Husky'&gt;, 
-&lt;class '__main__.Dog'&gt;, 
-&lt;class '__main__.Animal'&gt;, 
-&lt;class 'object'&gt;)
-</code></pre>
-                        </div>
-                    </div>
-                    <div id="rightc">
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Animal(): 
-    pass
-class Dog(Animal):
-    pass
-class Cat(Animal):
-    pass
-class X(Dog, Cat):
-    pass      
-
-print(X.__mro__)
-
-#output
-(&lt;class '__main__.Husky'&gt;, 
-&lt;class '__main__.Dog'&gt;, 
-&lt;class '__main__.Cat'&gt;,
-&lt;class '__main__.Animal'&gt;, 
-&lt;class 'object'&gt;)
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Animal():
-    pass
-class Dog(Animal):
-    pass
-class Cat(Animal):
-    pass
-class Husky(Dog):
-    pass
-class Persian(Cat):
-    pass
-class X(Husky, Persian):
-    pass      
-
-print(X.__mro__)
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-#output
-(&lt;class '__main__.X'&gt;, &lt;class '__main__.Husky'&gt;, 
-&lt;class '__main__.Dog'&gt;, &lt;class '__main__.Persian'&gt;, 
-&lt;class '__main__.Cat'&gt;, &lt;class '__main__.Animal'&gt;, 
-&lt;class 'object'&gt;)
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Animal():
-    pass
-class Dog(Animal):
-    pass
-class Cat(Animal):
-    pass
-class Husky(Dog, Cat):
-    pass
-class Persian(Dog, Cat):
-    pass
-class X(Husky, Persian):
-    pass      
-
-print(X.__mro__)
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-(&lt;class '__main__.X'&gt;, &lt;class '__main__.Husky'&gt;, 
-&lt;class '__main__.Persian'&gt;, &lt;class '__main__.Dog'&gt;, 
-&lt;class '__main__.Cat'&gt;, &lt;class '__main__.Animal'&gt;, 
-&lt;class 'object'&gt;)
-</code></pre>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <h3>Topological Sorting (C3)</h3>
-                    <div id='left'>
-                        <div class="fragment"><img data-src="1.png" style="height: 400pt"></div>
-                    </div>
-                    <div id='right'>
-                        <div class="fragment"><img data-src="2.png" style="height: 400pt"></div>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div id='leftc'>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Animal():
-    pass
-class Dog(Animal):
-    pass
-class Cat(Animal):
-    pass
-class Husky(Dog, Cat):
-    pass
-class Persian(Cat, Dog):
-    pass
-class X(Husky, Persian):
-    pass      
-
-print(X.__mro__)
-# Error
-</code></pre>
-                        </div>
-                    </div>
-                    <div id='rightc'>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Animal():
-    pass
-class Dog(Animal):
-    pass
-class X(Animal, Dog):
-    pass
-print(X.__mro__)
-# Error
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <p><b>如果你一定要秀一波操作</b></p>
-                    <h3>MixIn Inheritance</h3>
-                    <div class="fragment"><img data-src="3.png" style="height: 300pt"></div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div id='leftc'>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Animal():
-    pass
-
-class EatMixIn():
-    def eat(self):
-        print(self.name +" is eating.")
-class RunMixIn():
-    def run(self):
-        print(self.name +" is running.") 
-
-class Dog(Animal):
-    def __init__(self, name):
-        self.name = name
-
-class Cat(Animal):
-    def __init__(self, name):
-        self.name = name 
-</code></pre>
-                        </div>
-                    </div>
-                    <div id='rightc'>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class Husky(Dog, EatMixIn, RunMixIn):
-    def __init__(self, name):
-        super().__init__(name)
-
-class Persian(Cat, EatMixIn, RunMixIn):
-    def __init__(self, name):
-        super().__init__(name)
-
-x = Husky("Willie")
-y = Persian("Coco")
-x.eat() # Willie is eating.
-x.run() # Willie is running.
-y.eat() # Coco is eating.
-y.run() # Coco is running.   
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                
-            </section>
             <section>
                 <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">10.2 Special Methods </h2>
+                    <h2 style="color: white">10.1 Pandas (3)</h2>
+                    <h5>Data Organization</h5>
                 </section>
                 <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Private Attributes and methods</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Student:
-    def __init__(self, name, score):
-        self.__name = name
-        self.__score = score
-
-    def __show_score(self):
-        print(self.__score)
-
-    def print_score(self):
-        print('%s: %s' % (self.__name, self.__score))  
-
-bart = Student('Bart Simpson', 59)
-bart.print_score()
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-print(bart._Student__name) #correct
-bart._Student__show_score() #correct
-
-print(bart.__name) #error
-bart.__show_score() #error
-</code></pre>
-                    </div>
+                    <h3>Data of Crowdfunding Projects</h3>
+                    <a href="https://www.kaggle.com/kemical/kickstarter-projects">Kickstarter Projects</a> from Kaggle.com
+                    <div><img data-src="ks.jpg" style="height: 200pt"></div>
+                    More than 300,000 kickstarter projects.
                 </section>
                 <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>The precise definition of dir() is that it lists the methods and attributes of a Python object.</p>
-                        </li>
-                    </ul>
+                    <h5>Loading .csv file</h5>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
->>> stuff = list()
->>> dir(stuff)
-['__add__', '__class__', '__contains__', '__delattr__',
-'__delitem__', '__dir__', '__doc__', '__eq__',
-'__format__', '__ge__', '__getattribute__', '__getitem__',
-'__gt__', '__hash__', '__iadd__', '__imul__', '__init__',
-'__iter__', '__le__', '__len__', '__lt__', '__mul__',
-'__ne__', '__new__', '__reduce__', '__reduce_ex__',
-'__repr__', '__reversed__', '__rmul__', '__setattr__',
-'__setitem__', '__sizeof__', '__str__', '__subclasshook__',
-'append', 'clear', 'copy', 'count', 'extend', 'index',
-'insert', 'pop', 'remove', 'reverse', 'sort']
+df = pd.read_csv("ks-projects-201801.csv")
 </code></pre>
                     </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>Everything in Python is an object.</b></p>
-                        </li>
-                        
-                    </ul>
+                    <p class="fragment">relative path</p>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
-stuff = list()
-stuff.append('python')
-stuff.append('chuck')
-stuff.sort()
-print (stuff[0])
-
-print (stuff.__getitem__(0))
-print (list.__getitem__(stuff,0))
+df = pd.read_csv("data/ks-projects-201801.csv") # Linux or OSX
+df = pd.read_csv("data\ks-projects-201801.csv") # Windows
 </code></pre>
                     </div>
+                    <p class="fragment">absolute path</p>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
-chuck
-chuck
-chuck
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>Actually, the class you create inherits the ``object'' class.</b></p>
-                        </li>
-                        <li class="fragment">
-                            <p>Classes can intercept Python Operators</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    def __str__(self):
-        return "Dog's name is %s." % self.name  
+file_path = '/home/ehmatthes/data/ks-projects-201801.csv'
+df = pd.read_csv(file_path) # Linux or OSX
 
-
-my_dog = Dog('willie', 6)
-print(dir(my_dog))
-#output
-['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__',
- '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', 
- '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__',
-  '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 
-  'age', 'name']
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__str__</b></p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-my_dog = Dog('willie', 6)
-print(my_dog)
-#output
-<__main__.Dog object at 0x053A3750>
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-    def __str__(self):
-        return "Dog's name is %s." % self.name  
-
-my_dog = Dog('willie', 6)
-print(my_dog)
-#output
-Dog's name is willie.
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__add__</b></p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-my_dog = Dog('willie', 6)
-
-print(my_dog.name +' your_dog')
-#output
-willie your_dog
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def __add__(self, other):
-        return self.name + other
-
-my_dog = Dog('willie', 6)
-x = my_dog +' your_dog' 
-
-print(x)
-
-#output
-willie your_dog
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <h3>built-in Attributes</h3>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__dict__</b></p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-my_dog = Dog('willie', 6)
-print(my_dog.__dict__) # attributes of instances
-print(Dog.__dict__) # attributes of classes
-#output
-{'name': 'willie', 'age': 6} 
-{'__module__': '__main__', 
-'__init__': &lt;function Dog.__init__ at 0x0000029EA1277B70&gt;, 
-'__dict__': &lt;attribute '__dict__' of 'Dog' objects&gt;, 
-'__weakref__': &lt;attribute '__weakref__' of 'Dog' objects&gt;, 
-'__doc__': None}
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p><b>__doc__, __name__, __module__, __bases__</b></p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    "This is about dog class."
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-print(Dog.__doc__)
-print(Dog.__name__)
-print(Dog.__module__)
-print(Dog.__bases__)
-#output
-This is about dog class.
-Dog
-__main__
-(&lt;class 'object'&gt;,)
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-class Dog():
-    "This is about dog class."
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-class Husky(Dog):
-    pass
-
-print(Husky.__bases__)
-#output
-(&lt;class '__main__.Dog'&gt;,)
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Three Features of OOP</p>
-                            <p>Encapsulation, inheritance, polymorphism</p>
-                        </li>
-                        <li class="fragment">
-                            <p><b>Everything in Python is object.</b></p>
-                        </li>
-                    </ul>
-                    <ul>
-                        <li class="fragment">
-                            <p>Process-oriented programming (POP)</p>
-                            <p>Object-oriented Programming (OOP)</p>
-                        </li>
-                    </ul>
-                </section>
-            </section>
-            <section>
-                <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">10.3 File</h2>
-                </section>
-                <section>
-                    <h3>Reading from a File</h3>
-                    <ul>
-                        <li class="fragment">
-                            <p>pi_digits.txt</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-3.1415926535
-8979323846
-2643383279
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-with open('pi_digits.txt') as file_object:
-    contents = file_object.read() # string
-    print(contents.rstrip())
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <h3>File Path</h3>
-                    <ul>
-                        <li class="fragment">
-                            <p>relative path</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-with open('text_files/filename.txt') as file_object: # Linux or OSX
-with open('text_files\filename.txt') as file_object: # Windows
-</code></pre>
-                    </div>
-                    <ul>
-                        <li class="fragment">
-                            <p>absolute path</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-file_path = '/home/ehmatthes/other_files/text_files/filename.txt'
-with open(file_path) as file_object: # Linux or OSX
-file_path = r'C:\Users\ehmatthes\other_files\text_files\filename.txt'
-with open(file_path) as file_object: # Windows
-</code></pre>
-                    </div>
-                    <ul>
-                        <li class="fragment"><b>Please add "r" if you use Windows.</b></li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Reading Line by Line</h3>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'pi_digits.txt'
-with open(filename) as file_object:
-    for line in file_object:
-        print(line)
-
-3.1415926535
-
-8979323846
-
-2643383279
-
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'pi_digits.txt'
-with open(filename) as file_object:
-    for line in file_object:
-        print(line.rstrip())
-
-3.1415926535
-8979323846
-2643383279
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Making a List of Lines from a File</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'pi_digits.txt'
-
-with open(filename) as file_object:
-    lines = file_object.readlines() #List
-
-for line in lines:
-    print(line.rstrip())
-</code></pre>
-                    </div>
-                    <ul>
-                        <li class="fragment">
-                            <p>Working with a File’s Contents</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'pi_digits.txt'
-
-with open(filename) as file_object:
-    lines = file_object.readlines() # list read() works here
-
-pi_string = ''
-for line in lines:
-    pi_string += line.rstrip()
-print(pi_string)
-print(len(pi_string))
-
-3.141592653589793238462643383279 # string
-32
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <h3>Writing to a File</h3>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'programming.txt'
-
-with open(filename, 'w') as file_object:
-    file_object.write("I love programming.")
-</code></pre>
-                    </div>
-                    <ul>
-                        <li class="fragment">
-                            <p>The second argument, 'w', tells Python that we want to open the file in write mode. You can open a file 198 Chapter 10 in read mode ('r'), write mode ('w'), append mode ('a'), or a mode that allows you to read and write to the file ('r+'). If you omit the mode argument, Python opens the file in read-only mode by default.</p>
-                        </li>
-                        <li class="fragment">
-                            <p><b>Python can only write strings to a text file. If you want to store numerical data in a text file, you’ll have to convert the data to string format first using the str() function.</b></p>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Writing Multiple Lines</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'programming.txt'
-with open(filename, 'w') as file_object:
-    file_object.write("I love programming.")
-    file_object.write("I love creating new games.")
-
-I love programming.I love creating new games.   
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'programming.txt'
-with open(filename, 'w') as file_object:
-    file_object.write("I love programming.\n")
-    file_object.write("I love creating new games.\n")
-
-I love programming.
-I love creating new games.
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Appending to a File</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'programming.txt'
-message.py
-with open(filename, 'a') as file_object:
-    file_object.write("I also love finding meaning in large datasets.\n")
-    file_object.write("I love creating apps that can run in a browser.\n")
-
-I love programming.
-I love creating new games.
-I also love finding meaning in large datasets.
-I love creating apps that can run in a browser.
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <h3>Exceptions</h3>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-print("Give me two numbers, and I'll divide them.")
-print("Enter 'q' to quit.")
-while True:
-    first_number = input("\nFirst number: ")
-    if first_number == 'q':
-        break
-    second_number = input("Second number: ")
-    try:
-        answer = int(first_number) / int(second_number)
-    except ZeroDivisionError:
-        print("You can't divide by 0!")
-    else:
-        print(answer)
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-Give me two numbers, and I'll divide them.
-Enter 'q' to quit.
-
-First number: 5
-Second number: 0
-You can't divide by 0!
-
-First number: 5
-Second number: 2
-2.5
-First number: q
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Handling the FileNotFoundError Exception</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'alice.txt'
-with open(filename) as f_obj:
-    contents = f_obj.read() #Error
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'alice.txt'
-try:
-    with open(filename) as f_obj:
-        contents = f_obj.read()
-except FileNotFoundError:
-    msg = "Sorry, the file " + filename + " does not exist."
-    print(msg)
-
-Sorry, the file alice.txt does not exist.
+file_path = r'C:\Users\ehmatthes\data\ks-projects-201801.csv'
+df = pd.read_csv(file_path) # Windows
 </code></pre>
                     </div>
                 </section>
                 <section>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'alice.txt'
-try:
-    with open(filename) as f_obj:
-        contents = f_obj.read()
-except FileNotFoundError:
-    msg = "Sorry, the file " + filename + " does not exist."
-    print(msg)
+>>> df.shape
+(378661, 15)
 
-else:
-# Count the approximate number of words in the file.
-    words = contents.split()
-    num_words = len(words)
-    print("The file " + filename 
-    + " has about " + str(num_words) + " words.")
+>>> df.info()
+RangeIndex: 378661 entries, 0 to 378660
+Data columns (total 15 columns):
+ID                  378661 non-null int64
+name                378657 non-null object
+category            378661 non-null object
+main_category       378661 non-null object
+currency            378661 non-null object
+deadline            378661 non-null object
+goal                378661 non-null float64
+launched            378661 non-null object
+pledged             378661 non-null float64
+state               378661 non-null object
+backers             378661 non-null int64
+country             378661 non-null object
+usd pledged         374864 non-null float64
+usd_pledged_real    378661 non-null float64
+usd_goal_real       378661 non-null float64
+dtypes: float64(5), int64(2), object(8)
+memory usage: 43.3+ MB
 </code></pre>
                     </div>
                 </section>
                 <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Working with Multiple Files</p>
-                        </li>
-                    </ul>
+                    <p>Filtering with boolean array</p>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
-def count_words(filename):
-    """Count the approximate number of words in a file."""
-    try:
-        with open(filename) as f_obj:
-            contents = f_obj.read()
-    except FileNotFoundError:
-        msg = "Sorry, the file " + filename + " does not exist."
-        print(msg)
-    else:
-    # Count approximate number of words in the file.
-    words = contents.split()
-    num_words = len(words)
-    print("The file " + filename + " has about " 
-        + str(num_words) +" words.")
+#查看第一行
+>>> df.iloc[1,:]
+ID                                                     1000003930
+name                Greeting From Earth: ZGAC Arts Capsule For ET
+category                                           Narrative Film
+main_category                                        Film & Video
+currency                                                      USD
+deadline                                               2017-11-01
+goal                                                        30000
+launched                                      2017-09-02 04:43:57
+pledged                                                      2421
+state                                                      failed
+backers                                                        15
+country                                                        US
+usd pledged                                                   100
+usd_pledged_real                                             2421
+usd_goal_real                                               30000
+Name: 1, dtype: object
 </code></pre>
                     </div>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
-filename = 'alice.txt'
-count_words(filename)
+#根据条件筛选特定行:美国本土项目，筹资金额大于等于30000美刀
+>>> df_us = df[df['country']=='US']
+>>> df_us30000 = df_us[df_us['goal']>=30000]
 
-filenames = ['alice.txt', 'siddhartha.txt', 'moby_dick.txt', 'little_women.txt']
-for filename in filenames:
-    count_words(filename)
+#[43312 rows x 15 columns]
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Basic Data Description</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us[['backers','goal','pledged']].describe()
+             backers          goal       pledged
+count  292627.000000  2.926270e+05  2.926270e+05
+mean      113.078615  4.403497e+04  9.670193e+03
+std       985.723400  1.108372e+06  9.932942e+04
+min         0.000000  1.000000e-02  0.000000e+00
+25%         2.000000  2.000000e+03  4.100000e+01
+50%        14.000000  5.250000e+03  7.250000e+02
+75%        60.000000  1.500000e+04  4.370000e+03
+max    219382.000000  1.000000e+08  2.033899e+07
+</code></pre>
+                    </div>
+                    <p class="fragment">Arithmetics (+,-,/,//,*,**)</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us['percentage'] = df_us['pledged']/df_us['goal']
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <h6>Sorting and Ranking</h6>
+                    <p class="fragment">When sorting a DataFrame, you can use the data in one or more columns as the sort keys. To do so, pass one or more column names to the <b>by</b> option of sort_values.</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us.sort_values(by='goal', ascending=False)
+
+>>> df_us.head().sort_values(by=['main_category','goal'], 
+...: ascending=[True,False])
+             ID  ... percentage
+2  1.000004e+09  ...   0.004889
+1  1.000004e+09  ...   0.080700
+4  1.000011e+09  ...   0.065795
+5  1.000014e+09  ...   1.047500
+3  1.000008e+09  ...   0.000200
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us.head().rank()
+    ID  name  category  ...  usd_pledged_real  usd_goal_real  percentage
+1  1.0   2.0       3.5  ...               4.0            3.0         4.0
+2  2.0   5.0       3.5  ...               2.0            4.0         2.0
+3  3.0   4.0       2.0  ...               1.0            1.0         1.0
+4  4.0   1.0       1.0  ...               3.0            2.0         3.0
+5  5.0   3.0       5.0  ...               5.0            5.0         5.0
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_s=pd.DataFrame({'sales':[100,200,300,200]})
+   sales
+0    100
+1    200
+2    300
+3    200
+</code></pre>
+                    </div>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_s.rank()
+   sales
+0    1.0
+1    2.5
+2    4.0
+3    2.5
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_s.rank(method='first') #数值
+   sales
+0    1.0
+1    2.0
+2    4.0
+3    3.0
+</code></pre>
+                        </div>
+                    </div>
+                    <p class="fragment">min and max</p>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_s.rank(method='min')
+   sales
+0    1.0
+1    2.0
+2    4.0
+3    2.0
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_s.rank(method='max')
+   sales
+0    1.0
+1    3.0
+2    4.0
+3    3.0
+</code></pre>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h6>Counting</h6>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us['main_category'].value_counts()
+
+Film & Video    51922
+Music           43238
+Publishing      31726
+Games           24636
+Art             22311
+Design          21690
+Technology      21556
+Food            19941
+Fashion         16584
+Comics           8910
+Theater          8709
+Photography      7988
+Crafts           6648
+Journalism       3540
+Dance            3228
+Name: main_category, dtype: int64
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us['main_category'].value_counts(
+...: normalize = True)
+Film & Video    0.177434
+Music           0.147758
+Publishing      0.108418
+Games           0.084189
+Art             0.076244
+Design          0.074122
+Technology      0.073664
+Food            0.068145
+Fashion         0.056673
+Comics          0.030448
+Theater         0.029761
+Photography     0.027298
+Crafts          0.022718
+Journalism      0.012097
+Dance           0.011031
+Name: main_category, dtype: float64
+</code></pre>
+                        </div>
+                    </div>
+                    <h6 class="fragment">Searching</h6>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us['main_category'].isin(['Music','Games'])
+>>> df_us[df_us['main_category'].isin(['Music','Games'])==True]
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <h6>Time</h6>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+from datetime import datetime
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> now = datetime.now()
+>>> now
+datetime.datetime(2020, 10, 29, 11, 50, 46, 908483)
+
+>>> now.year, now.month, now.day
+(2020, 10, 29)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> delta = datetime(2011,1,7) - datetime(2008, 6, 24)
+>>> delta.days
+926
+
+>>> from datetime import timedelta #only for day, hour, second
+>>> datetime(2011,1,7) + timedelta(12)
+datetime.datetime(2011, 1, 19, 0, 0)
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">
+                        Converting between String and Datetime
+                    </p>
+                    <div class="div-a">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+>>> date_1 = df_us.loc[1,'launched']
+>>> date_1
+'2017-09-02 04:43:57'
+
+>>> stamp=datetime.strptime(date_1,'%Y-%m-%d %H:%M:%S')
+datetime.datetime(2017, 9, 2, 4, 43, 57)
+>>> type(stamp)
+datetime.datetime
+
+>>> stamp.strftime('%d-%m-%Y') 
+'02-09-2017'
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-b">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+%Y Four-digit year
+%y two-digit year
+%m two-digit month
+%B Month name
+%d two-digit day
+%W week number
+%H Hour in 24-h
+%I Hour in 12-h
+%S Second
+%F shortcut Y-M-D
+%D shortcut m/d/y
+</code></pre>
+                        </div>
+                    </div>
+                    <p class="fragment">Parse</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> from dateutil.parser import parse
+>>> parse('2017-09-02 04:43:57')
+datetime.datetime(2017, 9, 2, 4, 43, 57)
+
+>>> stamp_0 =pd.to_datetime('2017-09-02 04:43:57')
+>>> stamp_0
+Timestamp('2017-09-02 04:43:57')
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Calculating the time period</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us['launched_time'] = pd.to_datetime(df_us['launched'])
+>>> df_us['deadline_time'] = pd.to_datetime(df_us['deadline'])
+>>> df_us['period'] = df_us['deadline_time']-df_us['launched_time'] 
+>>> df_us['period']
+1        59 days 19:16:03
+2        44 days 23:39:10
+3        29 days 20:35:49
+4        55 days 15:24:57
+5        34 days 10:21:33
+      
+378656   29 days 21:24:30
+378657   26 days 20:24:46
+378658   45 days 04:19:30
+378659   30 days 05:46:07
+378660   27 days 14:52:13
+Name: period, Length: 292627, dtype: timedelta64[ns]
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Converting the time to numbers</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us['period_num'] = df_us['period']/timedelta(1)
+>>> df_us['period_num']
+1         59.802813
+2         44.985532
+3         29.858206
+4         55.642326
+5         34.431632
+   
+378656    29.892014
+378657    26.850532
+378658    45.180208
+378659    30.240359
+378660    27.619595
+Name: period_num, Length: 292627, dtype: float64
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Filtering by date</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us[(df_us['launched_time']>='20150101')]
+>>> df_us[(df_us['launched_time']>='20150101')& (df_us['lauched_time']<='20151231')]
+                ID  ... period_num
+4       1000011046  ...  55.642326
+15      1000064368  ...  29.909109
+17      1000068480  ...  29.110486
+38      1000134913  ...  34.092025
+49      1000197321  ...  40.050185
+           ...  ...        ...
+378600   999687927  ...  59.057986
+378616    99977040  ...  29.821157
+378635    99987261  ...  29.057477
+378639   999884445  ...  29.455394
+378644   999934908  ...  21.685255
+[53467 rows x 19 columns]
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Index by Timestamps</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_ustime = df_us.set_index(['launched_time'])
+>>> df_ustime
+                             ID  ... period_num
+launched_time                    ...           
+2017-09-02 04:43:57  1000003930  ...  59.802813
+2013-01-12 00:20:50  1000004038  ...  44.985532
+2012-03-17 03:24:11  1000007540  ...  29.858206
+2015-07-04 08:35:03  1000011046  ...  55.642326
+2016-02-26 13:38:27  1000014025  ...  34.431632
+                        ...  ...        ...
+2014-09-17 02:35:30   999976400  ...  29.892014
+2011-06-22 03:35:14   999977640  ...  26.850532
+2010-07-01 19:40:30   999986353  ...  45.180208
+2016-01-13 18:13:53   999987933  ...  30.240359
+2011-07-19 09:07:47   999988282  ...  27.619595
+[292627 rows x 19 columns]
+
+# 对比暴力修改
+# df_us.rename(columns={'原始名'：'新名'}, index={'原始名'：'新名'})
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_ustime['20170902'] # index重复
+>>> df_ustime['20170902':'20170930']
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p>Summarizing and Computing</p>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+>>> df_us.count(axis=1) #每行非空个数
+>>> df_us.count(axis=0) #每列非空个数
+>>> df_us['usd_pledged_real'].sum()
+>>> df_us['usd_pledged_real'].mean()
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+.max()     .min()
+.median()  .mode()
+.var()     .std()
+.quantile() #0-1
+</code></pre>
+                        </div>
+                    </div>
+                    <p class="fragment">Correlation and Covariance</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> data = pd.DataFrame({'Q1':[1,3,4,3,4],
+...:                     'Q2':[2,3,1,2,3],
+...:                     'Q3':[1,5,2,4,4]})
+>>> data['Q1'].corr(data['Q3'])
+0.4969039949999533
+
+>>> data['Q1'].cov(data['Q3'])
+1
+
+>>> data.cov()
+>>> data.corr()
+</code></pre>
+                    </div>
+                    <p class="fragment">Export .csv file</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> out_col = ['deadline_time','period_num','launched_time']
+>>> df_us.to_csv('out.csv',index=False,columns=out_col)
 </code></pre>
                     </div>
                 </section>
             </section>
             <section>
                 <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">10.4 Storing Data, Test</h2>
-                </section>
-                <section>
-                    <h3>JSON</h3>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-import json
-
-numbers = [2, 3, 5, 7, 11, 13]
-filename = 'numbers.json'
-with open(filename, 'w') as f_obj:
-    json.dump(numbers, f_obj)
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-import json
-
-filename = 'numbers.json'
-with open(filename) as f_obj:
-    numbers = json.load(f_obj)
-print(numbers)
-
-[2, 3, 5, 7, 11, 13]
-</code></pre>
-                    </div>
+                    <h2 style="color: white">10.2 Pandas (4)</h2>
+                    <h5>Data Visualization</h5>
                 </section>
                 <section>
                     <ul>
                         <li class="fragment">
-                            <p>Saving and Reading User-Generated Data</p>
+                            <p><a href="https://matplotlib.org/">The matplotlib Gallery</a></p>
                         </li>
                     </ul>
+                    <h5>Successful and Failed</h5>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
-import json
+import pandas as pd
+import matplotlib.pyplot as plt
 
-username = input("What is your name? ")
-filename = 'username.json'
-with open(filename, 'w') as f_obj:
-    json.dump(username, f_obj)
-    print("We'll remember you when you come back, " + username + "!")
+df = pd.read_csv("ks-projects-201801.csv")
+df_state = df['state'].value_counts()
+print(df_state)
+df_state_r=df_state['failed':'canceled']
+df_state_r['others']=df_state['undefined':].sum()
 </code></pre>
                     </div>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
-import json
-filename = 'username.json'
-with open(filename) as f_obj:
-    username = json.load(f_obj)
-    print("Welcome back, " + username + "!")
+explode=[0.05,0,0,0]
+plt.pie(df_state_r.values, labels=df_state_r.index,\
+explode=explode, autopct='%.0f%%',shadow=True)
+plt.title("State", loc='center')
+plt.savefig('state.jpg',dpi=300)
 </code></pre>
                     </div>
                 </section>
                 <section>
+                    <div class="fragment"><img data-src="state.jpg" style="height: 400pt"></div>
+                </section>
+                <section>
+                    <h5>Category</h5>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
-import json
+import pandas as pd
+import matplotlib.pyplot as plt
 
-filename = 'username.json'
-try:
-    with open(filename) as f_obj:
-    username = json.load(f_obj)
-except FileNotFoundError:
-    username = input("What is your name? ")
-    with open(filename, 'w') as f_obj:
-        json.dump(username, f_obj)
-        print("We'll remember you when you come back, " + username + "!")
-else:
-    print("Welcome back, " + username + "!")
+df = pd.read_csv("ks-projects-201801.csv")
+df_category = df['main_category'].value_counts()
+df_category_r=df_category['Film & Video':'Fashion']
+df_category_r['others']=df_category['Theater':'Dance'].sum()
 </code></pre>
                     </div>
                     <div class="fragment">
                         <pre><code class="line-numbers" data-trim contenteditable>
-What is your name? Eric #First time
-We'll remember you when you come back, Eric!
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-Welcome back, Eric!
+plt.pie(df_category_r.values, labels=df_category_r.index,\
+ autopct='%.0f%%',shadow=True)
+plt.title("Category", loc='center')
+plt.savefig('category.jpg',dpi=300)
 </code></pre>
                     </div>
                 </section>
                 <section>
+                    <div class="fragment"><img data-src="category.jpg" style="height: 400pt"></div>
+                </section>
+                <section>
+                    <h5>Pledged</h5>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("ks-projects-201801.csv")
+df_pledged = df.sort_values(by='pledged',ascending=False).head(100)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+plt.style.use('ggplot')
+plt.plot(df_pledged['pledged'].values)
+plt.title("Pledged", loc='center')
+plt.xlabel("Top 100 projects", fontsize=10)
+plt.ylabel("Amount", fontsize=10)
+plt.savefig('pledged.jpg',dpi=300)
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="pledged.jpg" style="height: 400pt"></div>
+                </section>
+                <section>
+                    <h5>Failed Projects</h5>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("ks-projects-201801.csv")
+df_failed = df[df['state']=='failed']
+df_failed['percent'] = df_failed['pledged']/df_failed['goal']
+df_failed_r=df_failed[df_failed['percent']<1]
+df_f = df_failed_r.sort_values(by='percent',ascending=False)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+plt.style.use('ggplot')
+plt.plot(df_f['percent'].values)
+plt.title("Failed", loc='center')
+plt.xlabel("Projects", fontsize=10)
+plt.ylabel("Percentage", fontsize=10)
+plt.savefig('failed.jpg',dpi=300)
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="failed.jpg" style="height: 400pt"></div>
+                </section>
+                <section>
+                    <h5>Time</h5>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("ks-projects-201801.csv")
+df['launched_time'] = pd.to_datetime(df['launched'])
+df['deadline_time'] = pd.to_datetime(df['deadline'])
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def year_data(y):
+    return df[(df['launched_time']>=str(y)) & (df['launched_time']< str(y+1))]
+ 
+df_year_count=[]
+df_year=list(range(2010,2018))
+for y in range(2010,2018):
+    df_year_count.append(year_data(y)['ID'].count())
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+plt.bar(df_year,df_year_count)
+plt.title("2010-2017 Projects", loc='center')
+plt.xlabel("Year", fontsize=10)
+plt.ylabel("Amount", fontsize=10)
+plt.savefig('year.jpg',dpi=300)
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="year.jpg" style="height: 400pt"></div>
+                </section>
+                <section>
+                    <h5>Time: Percentage</h5>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def year_data(y):
+    return df[(df['launched_time']>=str(y)) & (df['launched_time']< str(y+1))]
+ 
+df_year_count=[]
+df_year=list(range(2010,2018))
+for y in range(2010,2018):
+    df_year_count.append(year_data(y)['ID'].count())
+df_year_s=[]  
+for y in range(2010,2018):
+    df_year_s.append(year_data(y)[year_data(y)['state']=='successful']['ID'].count())
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+plt.bar(df_year,df_year_count, label='total')
+plt.bar(df_year,df_year_s,label='successful')
+plt.title("2010-2017 Projects", loc='center')
+plt.xlabel("Year", fontsize=10)
+plt.ylabel("Amount", fontsize=10)
+plt.legend(loc="upper left")
+plt.savefig('year_percentage.jpg',dpi=300)
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="year_percentage.jpg" style="height: 400pt"></div>
+                </section>
+                <section>
+                    <h6>Time length and Category</h6>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import timedelta
+
+df = pd.read_csv("ks-projects-201801.csv")
+df['launched_time'] = pd.to_datetime(df['launched'])
+df['deadline_time'] = pd.to_datetime(df['deadline'])
+df['period'] = df['deadline_time']-df['launched_time'] 
+df['period_num'] = df['period']/timedelta(1)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+df_category=df['main_category'].value_counts()
+cp=[]
+for c in df_category.index:
+    cp.append((df[df['main_category']==c]['period_num'].std(),c))
+cp.sort()
+cp_index=[]
+cp_value=[]
+for x, y in cp:
+    cp_value.append(x)
+    cp_index.append(y)    
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+plt.barh(cp_index,cp_value)
+plt.title("Std of the time length", loc='center')
+plt.savefig('cp.jpg',dpi=300, bbox_inches='tight')
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="cp.jpg" style="height: 400pt"></div>
+                </section>
+                <section>
+                    <h5>Descriptive Analysis (unofficial)</h5>
                     <ul>
-                        <li class="fragment">
-                            <p>Refactoring</p>
-                        </li>
+                        <li>For each column,</li>
+                        <ul>
+                            <li>Strings: classification, percentage</li>
+                            <li>Numbers: trend, zone</li>
+                        </ul>
+                        <li>Two columns, control one and check the other</li>
+                        <li>time, location, subject (people, country, firms, etc.)</li>
+                        <li>Calculation: mean, variance, max, min, range, etc.</li>
+                        <li>Calculation: multiple columns</li>
                     </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-import json
-
-def get_stored_username():
-"""Get stored username if available."""
-    filename = 'username.json'
-    try:
-        with open(filename) as f_obj:
-            username = json.load(f_obj)
-    except FileNotFoundError:
-        return None
-    else:
-        return username
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def greet_user():
-"""Greet the user by name."""
-    username = get_stored_username()
-    if username:
-        print("Welcome back, " + username + "!")
-    else:
-        username = input("What is your name? ")
-        filename = 'username.json'
-        with open(filename, 'w') as f_obj:
-            json.dump(username, f_obj)
-            print("We'll remember you when you come back, " + username + "!")
-
-greet_user()
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def get_stored_username():
-"""Get stored username if available."""
-    filename = 'username.json'
-    try:
-        with open(filename) as f_obj:
-            username = json.load(f_obj)
-    except FileNotFoundError:
-        return None
-    else:
-        return username
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def get_new_username():
-"""Prompt for a new username."""
-    username = input("What is your name? ")
-    filename = 'username.json'
-    with open(filename, 'w') as f_obj:
-        json.dump(username, f_obj)
-    return username
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def greet_user():
-"""Greet the user by name."""
-    username = get_stored_username()
-    if username:
-        print("Welcome back, " + username + "!")
-    else:
-        username = get_new_username()
-        print("We'll remember you when you come back, " + username + "!")
-greet_user()
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <h3>Testing your code</h3>
-                    <ul>
-                        <li class="fragment">
-                            <p>name_function.py</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def get_formatted_name(first, last):
-    full_name = first + ' ' + last
-    return full_name.title()
-</code></pre>
-                    </div>
-                    <ul>
-                        <li class="fragment">
-                            <p>Unit Tests and Test Cases</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-import unittest
-from name_function import get_formatted_name
-
-class NamesTestCase(unittest.TestCase):
-    def test_first_last_name(self): # should start with test_
-        formatted_name = get_formatted_name('janis', 'joplin')
-        self.assertEqual(formatted_name, 'Janis Joplin')
-
-unittest.main()
-
-.
-----------------------------------------------------------------------
-Ran 1 test in 0.000s
-
-OK
-
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def get_formatted_name(first, middle, last):
-    full_name = first + ' ' + middle + ' ' + last
-    return full_name.title()
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-E
-======================================================================
-ERROR: test_first_last_name (__main__.NamesTestCase)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "test.py", line 6, in test_first_last_name
-    formatted_name = get_formatted_name('janis', 'joplin')
-TypeError: get_formatted_name() missing 1 required positional argument: 'last'
-
-----------------------------------------------------------------------
-Ran 1 test in 0.000s
-
-FAILED (errors=1)
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-def get_formatted_name(first, last, middle=''):
-    if middle:
-        full_name = first + ' ' + middle + ' ' + last
-    else:
-        full_name = first + ' ' + last
-    return full_name.title()
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-.
-----------------------------------------------------------------------
-Ran 1 test in 0.000s
-
-OK
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-import unittest
-from name_function import get_formatted_name
-class NamesTestCase(unittest.TestCase):
-    def test_first_last_name(self):
-        formatted_name = get_formatted_name('janis', 'joplin')
-        self.assertEqual(formatted_name, 'Janis Joplin')
-    def test_first_last_middle_name(self):
-        formatted_name = get_formatted_name('wolfgang', 'mozart', 'amadeus')
-        self.assertEqual(formatted_name, 'Wolfgang Amadeus Mozart')
-
-unittest.main()
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-..
-----------------------------------------------------------------------
-Ran 2 tests in 0.000s
-
-OK
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <h3>A Variety of Asset Methods</h3>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-assertEqual(a, b) # Verify that a == b
-assertNotEqual(a, b) # Verify that a != b
-assertTrue(x) # Verify that x is True
-assertFalse(x) # Verify that x is False
-assertIn(item, list) # Verify that item is in list
-assertNotIn(item, list) # Verify that item is not in list
-</code></pre>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <h3>Testing a Class</h3>
-                    <div id='leftc'>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-class AnonymousSurvey():
-
-    def __init__(self, question):
-        self.question = question
-        self.responses = []
-
-    def show_question(self):
-        print(self.question)
-
-    def store_response(self, new_response):
-        self.responses.append(new_response)
-
-    def show_results(self):
-        print("Survey results:")
-        for response in self.responses:
-            print('- ' + response)
-</code></pre>
-                        </div>
-                    </div>
-                    <div id='rightc'>
-                        <div class="fragment">
-                            <pre><code class="line-numbers" data-trim contenteditable>
-from survey import AnonymousSurvey
-
-question = "What language did you first learn to speak?"
-my_survey = AnonymousSurvey(question)
-
-my_survey.show_question()
-print("Enter 'q' at any time to quit.\n")
-while True:
-    response = input("Language: ")
-    if response == 'q':
-        break
-    my_survey.store_response(response)
-
-print("\nThank you to everyone who 
-        participated in the survey!")
-my_survey.show_results()
-</code></pre>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <h3>Testing the AnonymousSurvey Class</h3>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-import unittest
-from survey import AnonymousSurvey
-
-class TestAnonmyousSurvey(unittest.TestCase):
-
-    def test_store_single_response(self):
-        question = "What language did you first learn to speak?"
-        my_survey = AnonymousSurvey(question)
-        my_survey.store_response('English')
-        self.assertIn('English', my_survey.responses)
-
-unittest.main()
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-.
-----------------------------------------------------------------------
-Ran 1 test in 0.001s
-
-OK
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-import unittest
-from survey import AnonymousSurvey
-
-class TestAnonymousSurvey(unittest.TestCase):
-    def test_store_single_response(self):
---snip--
-
-    def test_store_three_responses(self):
-        question = "What language did you first learn to speak?"
-        my_survey = AnonymousSurvey(question)
-        responses = ['English', 'Spanish', 'Mandarin']
-        for response in responses:
-            my_survey.store_response(response)
-        for response in responses:
-            self.assertIn(response, my_survey.responses)
-
-unittest.main()
-</code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-..
-----------------------------------------------------------------------
-Ran 2 tests in 0.000s
-
-OK
-</code></pre>
-                    </div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>setUp()</p>
-                        </li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
-import unittest
-from survey import AnonymousSurvey
-class TestAnonymousSurvey(unittest.TestCase):
-
-    def setUp(self):
-        question = "What language did you first learn to speak?"
-        self.my_survey = AnonymousSurvey(question)
-        self.responses = ['English', 'Spanish', 'Mandarin']
-
-    def test_store_single_response(self):
-        self.my_survey.store_response(self.responses[0])
-        self.assertIn(self.responses[0], self.my_survey.responses)
-
-    def test_store_three_responses(self):
-        for response in self.responses:
-            self.my_survey.store_response(response)
-        for response in self.responses:
-            self.assertIn(response, self.my_survey.responses)
-
-unittest.main()
-</code></pre>
-                    </div>
                 </section>
             </section>
             <section>
                 <section data-background="#2c3e50" style="color: white; text-align: left;">
                     <h2 style="color: white">Summary</h2>
                     <ul>
-                        <li>File, Test</li>
+                        <li>Pandas</li>
                         <ul>
-                            <li>Reading: Python Crash Course, Chapter 10, 11</li>
+                            <li>Reading: Python for Data Analysis, Chapter 5, 9, 11.1, 11.2</li>
+                            <li>Reading: Python for Everybody, Chapter 15.1, 15.2, 16.1</li>
                         </ul>
                     </ul>
                 </section>
